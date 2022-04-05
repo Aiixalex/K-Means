@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument('--n-clusters', type=int,
                         help='number of features to use in a tree',
                         default=2)
-    parser.add_argument('--data', type=str, default='data.csv',
+    parser.add_argument('--data', type=str, default='Heart-counts.csv',
                         help='data path')
 
     a = parser.parse_args()
@@ -44,10 +44,14 @@ def main():
     heart = read_data(data_path)
     heart = preprocess_data(heart)
     X = PCA(heart.X, 100)
-    # Your code
+    kmeans = KMeans(n_clusters=n_classifiers, init='random', max_iter=50)
+    clustering = kmeans.fit(X)
+    print(kmeans.silhouette(clustering, X))
+    visualize_cluster(X, clustering)
 
-def visualize_cluster(x, y, clustering):
-    #Your code
+def visualize_cluster(x, clustering):
+    plt.scatter(x[:, 0], x[:, 1], c=clustering)
+    plt.show()
 
 if __name__ == '__main__':
     main()
