@@ -44,7 +44,7 @@ def main():
     heart = read_data(data_path)
     heart = preprocess_data(heart)
     X = PCA(heart.X, 100)
-    kmeans = KMeans(n_clusters=n_classifiers, init='random', max_iter=50)
+    kmeans = KMeans(n_clusters=n_classifiers, init='kmeans++', max_iter=50)
     clustering = kmeans.fit(X)
     print(kmeans.silhouette(clustering, X))
     visualize_cluster(X, clustering)
